@@ -7,6 +7,6 @@ setup(name='webhdfs',
       url='https://github.com/DiwanshuShekhar/webhdfs',
       description ='Python package to perform file operations on Kerberized HDFS',
       long_description='NA',
-      requires=['webhdfs'],
-      packages=['webhdfs']
+      requires=['webhdfs', 'webhdfs.requests_kerberos'],
+      packages=['webhdfs', 'webhdfs.requests_kerberos']
       )
