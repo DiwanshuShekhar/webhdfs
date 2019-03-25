@@ -33,16 +33,18 @@ class WebHDFSClient(object):
         status = {'create': None, 'append': None}
 
         # create
-        fullpath = self.http_url + dst + '?op=CREATE&noredirect=true'
+        fullpath = self.http_url + dst + '?op=CREATE&noredirect=false'
         headers = {'content-type': 'application/octet-stream'}
         resp = requests.put(fullpath, auth=self.auth, headers=headers)
         status['create'] = resp
 
         # append
-        fullpath = self.http_url + dst + '?op=APPEND&noredirect=true'
+        fullpath = self.http_url + dst + '?op=CREATE'
         headers = {'Location': fullpath, 'content-type': 'application/octet-stream'}
-        files = {'file': open(src, 'rb')}
-        resp = requests.post(fullpath, auth=self.auth, headers=headers, files=files)
+        with open(src, 'rb') as f:
+            data = f.read()
+            resp = requests.put(fullpath, auth=self.auth, headers=headers, data=data)
+            print(resp.headers)
         status['append'] = resp
 
         return status
